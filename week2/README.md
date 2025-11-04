@@ -18,8 +18,8 @@ The following activities were completed in **Week 2**.
   ```bash
   ./mycalc -a 5 8
   ```
-
 <br/>
+
 ### 📖 개요
 ---
 2주차에서 수행한 내용은 다음과 같습니다.
@@ -39,6 +39,7 @@ The following activities were completed in **Week 2**.
   ```
 
 <br/>
+
 ### 📘 Example Descriptions
 ---
 The details of each example are as follows:  
@@ -58,6 +59,7 @@ The details of each example are as follows:
     ./mycalc -a 5 8
     ```
 <br/>
+
 ### 📘 예제별 내용
 ---
 각 예제에 대한 내용은 다음과 같습니다.  
