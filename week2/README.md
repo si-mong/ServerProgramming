@@ -17,8 +17,9 @@ The following activities were completed in **Week 2**.
 - Example execution:  
   ```bash
   ./mycalc -a 5 8
+  ```
 
-  
+
 ### 📖 개요
 2주차에서 수행한 내용은 다음과 같습니다.
 (1) **Vi 기능 익히기**
@@ -34,8 +35,9 @@ The following activities were completed in **Week 2**.
 - 실행예시:     
   ```bash
   ./mycalc -a 5 8
+  ```
 
-  
+
 ### 📘 Example Descriptions
 The details of each example are as follows:  
 
@@ -54,7 +56,7 @@ The details of each example are as follows:
     ./mycalc -a 5 8
     ```
 
-   
+
 ### 📘 예제별 내용
 각 예제에 대한 내용은 다음과 같습니다.  
 - **calc**  
