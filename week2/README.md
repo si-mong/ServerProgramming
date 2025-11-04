@@ -22,7 +22,7 @@ The following activities were completed in **Week 2**.
 
 ### 📖 개요
 ---
-2주차에서 수행한 내용은 다음과 같습니다.
+2주차에서 수행한 내용은 다음과 같습니다.   
 (1) **Vi 기능 익히기**
 - `vi` 편집기를 사용하여 C 코드 작성  
  
