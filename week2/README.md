@@ -1,6 +1,6 @@
 # 💻 Practice: Vi Editor & Compile Multi-File C Program using `gcc`
 
-```markdown
+
 ### 📖 Overview
 ---
 The following activities were completed in **Week 2**.  
@@ -71,4 +71,3 @@ The details of each example are as follows:
   - 실행 예시:  
     ```bash
     ./mycalc -a 5 8
-    ```
