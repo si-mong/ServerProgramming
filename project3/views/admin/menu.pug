@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  .card
+    h2 메뉴 추가
+    form(method="GET" action="/admin/menu.html")
+      input(type="hidden" name="action" value="add")
+      .form-group
+        label 메뉴 이름:
+        input(type="text" name="name" placeholder="예: 간짜장" required)
+        label 가격:
+        input(type="number" name="price" placeholder="예: 8000" required)
+        input(type="submit" value="추가")
+
+  .card
+    h2 현재 등록된 메뉴
+    if menus.length === 0
+      .empty-state 등록된 메뉴가 없습니다.
+    else
+      table
+        thead
+          tr
+            th 메뉴 이름
+            th 가격
+            th 삭제
+        tbody
+          each m in menus
+            tr
+              td= m.name
+              td= m.price + '원'
+              td
+                a.button.danger(href=`/admin/menu.html?action=del&name=${m.name}`) 삭제

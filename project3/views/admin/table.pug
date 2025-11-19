@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  .card
+    h2 테이블 추가
+    form(method="GET" action="/admin/table.html")
+      input(type="hidden" name="action" value="add")
+      .form-group
+        label 테이블 ID:
+        input(type="text" name="tid" placeholder="예: T001" required)
+        input(type="submit" value="추가")
+
+  .card
+    h2 현재 등록된 테이블
+    if tables.length === 0
+      .empty-state 등록된 테이블이 없습니다.
+    else
+      table
+        thead
+          tr
+            th 테이블 ID
+            th 삭제
+        tbody
+          each t in tables
+            tr
+              td= t.tid
+              td
+                a.button.danger(href=`/admin/table.html?action=del&tid=${t.tid}`) 삭제

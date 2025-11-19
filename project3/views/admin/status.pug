@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+  if statusList.length === 0
+    .card
+      .empty-state 등록된 테이블이 없습니다.
+  else
+    each s in statusList
+      .card
+        h2 테이블 #{s.tid}
+        if s.items.length === 0
+          .empty-state 주문 내역이 없습니다.
+        else
+          table
+            thead
+              tr
+                th 메뉴
+                th 수량
+                th 단가
+                th 합계
+            tbody
+              each it in s.items
+                tr
+                  td= it.menu
+                  td= it.num + '개'
+                  td= it.price + '원'
+                  td= (it.price * it.num) + '원'
+            tfoot
+              tr
+                td(colspan="3")
+                  b 총합계
+                td
+                  b= s.total + '원'
+        p
+          a.button.success(href=`/admin/checkout.html?tid=${s.tid}`) 결제하기
+          a.button(href=`/customer/order.html?action=stat&tid=${s.tid}`) 고객 주문 페이지
