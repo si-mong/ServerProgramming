@@ -1,9 +1,6 @@
 # 서버프로그래밍 (Server Programming)
 
 ---
-
-# 1. 한국어 버전 (Korean Version)
-
 ## 1. 강의개요  
 이 교과목은 서버 프로그래밍의 기본 개념부터 실제 서비스 개발에 필요한 기술까지 폭넓게 다루는 수업입니다.  
 Linux 기반 환경에서 C 언어를 중심으로 서버 프로그램을 작성하며, 이론과 실습을 병행하여 실무와 가까운 경험을 제공합니다.
@@ -34,9 +31,6 @@ Linux 기반 환경에서 C 언어를 중심으로 서버 프로그램을 작성
 - Micro Project: Spring Framework Server  
 
 ---
-
-# 2. English Version
-
 ## 1. Course Overview  
 This course provides a comprehensive introduction to server programming, covering both fundamental theories and practical skills.  
 Students will work in a Linux environment, primarily using the C programming language, and gain hands-on experience through exercises and micro projects.
