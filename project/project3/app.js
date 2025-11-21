@@ -120,47 +120,59 @@ app.get('/admin/table.html', (req, res) => {
   const action = req.query.action;
   const tid = req.query.tid;
 
+  // 테이블과 주문 내역 목록 
   let tables = storage.getTables();
   let orders = storage.getOrders();
 
+  // 테이블 추가
   if (action === 'add') {
     if (!tid) {
       return res.type('text/plain').send('table add error');
     }
 
+    // 테이블 중복 체크
     const exists = tables.find((t) => t.tid === tid);
     if (exists) {
       return res.type('text/plain').send('table add error');
     }
 
+    // 파일로 저장
     tables.push({ tid });
     storage.saveTables(tables);
 
     return res.redirect('/admin/table.html?action=stat');
   }
 
+  // 테이블 삭제
   if (action === 'del') {
+
+    // tid가 없으면 에러
     if (!tid) {
       return res.type('text/plain').send('table del error');
     }
 
+    // 테이블 존재 여부 체크
     const idx = tables.findIndex((t) => t.tid === tid);
     if (idx === -1) {
       return res.type('text/plain').send('table del error');
     }
 
+    // 주문 내역이 있으면 에러
     const order = orders[tid];
     if (order && order.items && order.items.length > 0) {
       return res.type('text/plain').send('table del error2');
     }
 
+    // 테이블 삭제
     tables.splice(idx, 1);
     storage.saveTables(tables);
 
+    // 테이블 삭제 완료 후 stat 페이지로 리다이렉트
     return res.redirect('/admin/table.html?action=stat');
   }
 
   // stat 또는 그 외
+  // 테이블 목록 표시 
   return res.render('admin/table', {
     title: '테이블 관리',
     tables,
@@ -179,11 +191,13 @@ app.get('/admin/status.html', (req, res) => {
   const tables = storage.getTables();
   const orders = storage.getOrders();
 
+  // 테이블 별 주문 내역 표시
   const statusList = tables.map((t) => {
     const o = orders[t.tid] || { items: [], finished: false };
     const items = o.items || [];
     const total = items.reduce((sum, it) => sum + it.price * it.num, 0);
 
+    // 테이블 별 주문 내역 반환
     return {
       tid: t.tid,
       items,
@@ -192,6 +206,7 @@ app.get('/admin/status.html', (req, res) => {
     };
   });
 
+  // 전체 테이블 현황 표시
   res.render('admin/status', {
     title: '전체 테이블 현황',
     statusList,
@@ -211,10 +226,12 @@ app.get('/admin/checkout.html', (req, res) => {
   const tables = storage.getTables();
   const orders = storage.getOrders();
 
+  // tid가 없으면 에러
   if (!tid) {
     return res.type('text/plain').send('table checkout error');
   }
 
+  // 테이블 존재 여부 체크
   const exists = tables.find((t) => t.tid === tid);
   if (!exists) {
     return res.type('text/plain').send('table checkout error');
@@ -257,6 +274,7 @@ app.get('/customer/order.html', (req, res) => {
   const menuName = req.query.menu;
   const numStr = req.query.num;
 
+  // 메뉴와 테이블 목록, 테이블 별 주문 내역
   const menus = storage.getMenus();
   const tables = storage.getTables();
   const orders = storage.getOrders();
@@ -275,6 +293,7 @@ app.get('/customer/order.html', (req, res) => {
     const items = order.items || [];
     const total = items.reduce((sum, it) => sum + it.price * it.num, 0);
 
+    // 테이블 별 주문 내역 표시
     return res.render('customer/order', {
       title: `테이블 ${tid} 주문 현황`,
       tid,
@@ -310,22 +329,26 @@ app.get('/customer/order.html', (req, res) => {
       return res.type('text/plain').send('customer order add menu error');
     }
 
+    // 메뉴 존재 여부 체크
     const menuInfo = menus.find((m) => m.name === menuName);
     if (!menuInfo) {
       return res.type('text/plain').send('customer order add menu error');
     }
 
+    // 수량 형식 체크
     const num = parseInt(numStr, 10);
     if (Number.isNaN(num) || num <= 0) {
       // 수량 이상하면 그냥 메뉴 에러로 처리 (스펙에 별도 에러 없음)
       return res.type('text/plain').send('customer order add menu error');
     }
 
+    // 주문 내역이 없으면 초기화
     if (!orders[tid]) {
       orders[tid] = { items: [], finished: false };
     }
     const order = orders[tid];
 
+    // 주문 내역에 해당 메뉴가 없으면 추가
     let item = order.items.find((it) => it.menu === menuName);
     if (!item) {
       item = { menu: menuName, num: 0, price: menuInfo.price };
@@ -347,21 +370,25 @@ app.get('/customer/order.html', (req, res) => {
       return res.type('text/plain').send('customer order del menu error');
     }
 
+    // 주문 내역이 없으면 에러
     const order = orders[tid];
     if (!order || !order.items) {
       return res.type('text/plain').send('customer order del menu error');
     }
 
+    // 수량 형식 체크
     const num = parseInt(numStr, 10);
     if (Number.isNaN(num) || num <= 0) {
       return res.type('text/plain').send('customer order del menu error');
     }
 
+    // 주문 내역에 해당 메뉴가 없으면 에러
     const idx = order.items.findIndex((it) => it.menu === menuName);
     if (idx === -1) {
       return res.type('text/plain').send('customer order del menu error');
     }
 
+    // 주문 내역에 해당 메뉴 수량 감소
     const item = order.items[idx];
     item.num -= num;
     if (item.num <= 0) {

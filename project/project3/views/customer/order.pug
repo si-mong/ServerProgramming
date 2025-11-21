@@ -2,21 +2,6 @@ extends ../layout
 
 block content
   .card
-    h2 주문 추가
-    form(method="GET" action="/customer/order.html")
-      input(type="hidden" name="action" value="add")
-      input(type="hidden" name="tid" value=tid)
-      .form-group
-        label 메뉴:
-        select(name="menu" required)
-          option(value="" disabled selected) 메뉴 선택
-          each m in menus
-            option(value=m.name)= `${m.name} (${m.price}원)`
-        label 수량:
-        input(type="number" name="num" value="1" min="1" required style="width: 80px;")
-        input(type="submit" value="추가")
-
-  .card
     h2 현재 주문 내역
     if items.length === 0
       .empty-state 주문 내역이 없습니다.
@@ -28,7 +13,6 @@ block content
             th 수량
             th 단가
             th 합계
-            th 삭제
         tbody
           each it in items
             tr
@@ -36,25 +20,21 @@ block content
               td= it.num + '개'
               td= it.price + '원'
               td= (it.price * it.num) + '원'
-              td
-                a.button.danger(href=`/customer/order.html?action=del&tid=${tid}&menu=${it.menu}&num=1`) -1
-                if it.num > 1
-                  a.button.danger(href=`/customer/order.html?action=del&tid=${tid}&menu=${it.menu}&num=${it.num}`) 전체삭제
         tfoot
           tr
             td(colspan="3")
               b 총합계
-            td(colspan="2")
+            td(colspan="1")
               b= total + '원'
     
     p
       if finished
-        span.status-finished 주문이 완료된 상태입니다.
+        span.status-finished 주문 완료됨
       else
-        span.status-pending 주문이 진행 중입니다.
+        span.status-pending 주문 진행 중
     
     if !finished && items.length > 0
       form(method="GET" action="/customer/order.html" style="display: inline;")
         input(type="hidden" name="action" value="finish")
         input(type="hidden" name="tid" value=tid)
-        input.button.success(type="submit" value="주문 확정 (서빙 요청)")
+        input.button.success(type="submit" value="주문 확정 하기")
