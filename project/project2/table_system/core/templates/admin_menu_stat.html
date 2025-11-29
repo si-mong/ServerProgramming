@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %}메뉴 관리{% endblock %}
+{% block content %}
+<div class="admin-page">
+  <div class="page-header">
+    <h1>메뉴 관리</h1>
+    <a href="/admin/menu.html?action=add&name=&price=" class="btn btn-primary" id="addMenuBtn">
+      <span>+</span> ADD MENU ITEM
+    </a>
+  </div>
+
+  <form method="get" action="/admin/menu.html" id="menuForm" class="action-bar">
+    <label for="action">Action:</label>
+    <select name="action" id="action" required>
+      <option value="">---------</option>
+      <option value="del">선택한 메뉴 삭제</option>
+    </select>
+    <button type="submit" class="btn btn-secondary">Go</button>
+    <span class="selected-count" id="selectedCount">0 of {{ menus|length }} selected</span>
+  </form>
+
+  <div class="list-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th class="checkbox-col">
+            <input type="checkbox" id="selectAll" />
+          </th>
+          <th>MENU ITEM</th>
+          <th class="price-col">가격</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for menu in menus %}
+        <tr>
+          <td class="checkbox-col">
+            <input type="checkbox" name="menu_check" value="{{ menu.name }}" class="menu-checkbox" />
+          </td>
+          <td class="menu-name">{{ menu.name }}</td>
+          <td class="price">{{ menu.price|floatformat:0 }}원</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" class="empty-message">등록된 메뉴가 없습니다.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-footer">
+    <span class="item-count">{{ menus|length }} menu items</span>
+  </div>
+</div>
+
+<!-- 메뉴 추가 모달 -->
+<div id="addMenuModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>메뉴 추가</h2>
+    <form method="get" action="/admin/menu.html" class="modal-form">
+      <input type="hidden" name="action" value="add" />
+      <div class="form-group">
+        <label for="menuName">메뉴 이름:</label>
+        <input type="text" name="name" id="menuName" required placeholder="메뉴 이름을 입력하세요" />
+      </div>
+      <div class="form-group">
+        <label for="menuPrice">가격:</label>
+        <input type="number" name="price" id="menuPrice" required min="0" placeholder="가격을 입력하세요" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">추가</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">취소</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+// 전체 선택/해제
+document.getElementById('selectAll')?.addEventListener('change', function(e) {
+  const checkboxes = document.querySelectorAll('.menu-checkbox');
+  checkboxes.forEach(cb => cb.checked = e.target.checked);
+  updateSelectedCount();
+});
+
+// 개별 체크박스 변경 시
+document.querySelectorAll('.menu-checkbox').forEach(cb => {
+  cb.addEventListener('change', updateSelectedCount);
+});
+
+function updateSelectedCount() {
+  const checked = document.querySelectorAll('.menu-checkbox:checked').length;
+  const total = document.querySelectorAll('.menu-checkbox').length;
+  document.getElementById('selectedCount').textContent = `${checked} of ${total} selected`;
+  
+  // 전체 선택 체크박스 상태 업데이트
+  const selectAll = document.getElementById('selectAll');
+  if (selectAll) {
+    selectAll.checked = checked === total && total > 0;
+    selectAll.indeterminate = checked > 0 && checked < total;
+  }
+}
+
+// 메뉴 추가 모달
+document.getElementById('addMenuBtn')?.addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('addMenuModal').style.display = 'block';
+});
+
+document.querySelector('.close')?.addEventListener('click', closeModal);
+
+function closeModal() {
+  document.getElementById('addMenuModal').style.display = 'none';
+}
+
+window.onclick = function(event) {
+  const modal = document.getElementById('addMenuModal');
+  if (event.target == modal) {
+    closeModal();
+  }
+}
+
+// 폼 제출 시 선택된 메뉴들을 처리
+document.getElementById('menuForm')?.addEventListener('submit', function(e) {
+  const action = document.getElementById('action').value;
+  if (action === 'del') {
+    const checked = Array.from(document.querySelectorAll('.menu-checkbox:checked')).map(cb => cb.value);
+    if (checked.length === 0) {
+      e.preventDefault();
+      alert('삭제할 메뉴를 선택하세요.');
+      return false;
+    }
+    // 첫 번째 선택된 메뉴를 삭제 (여러 개 선택 시 첫 번째만)
+    const form = e.target;
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'name';
+    input.value = checked[0];
+    form.appendChild(input);
+    // action은 이미 select에 있음
+  }
+});
+
+// 초기 카운트 업데이트
+updateSelectedCount();
+</script>
+{% endblock %}
+

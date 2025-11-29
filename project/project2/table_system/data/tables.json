@@ -1,0 +1,28 @@
+{
+  "T002": {
+    "orders": [
+      {
+        "menu": "탕수육",
+        "num": 1,
+        "price": 19000
+      },
+      {
+        "menu": "깐풍기",
+        "num": 1,
+        "price": 32000
+      },
+      {
+        "menu": "짬뽕",
+        "num": 3,
+        "price": 9000
+      }
+    ],
+    "finished": false,
+    "checked_out": false
+  },
+  "T003": {
+    "orders": [],
+    "finished": false,
+    "checked_out": false
+  }
+}

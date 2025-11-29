@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}모든 테이블 현황{% endblock %}
+{% block content %}
+<h2>모든 테이블 현황</h2>
+
+{% for t in tables %}
+  <section>
+    <h3>{{ t.tid }}</h3>
+    <ul>
+      {% for o in t.orders %}
+        <li>{{ o.menu }} × {{ o.num }} = {{ o.subtotal }}</li>
+      {% empty %}
+        <li>주문 없음</li>
+      {% endfor %}
+    </ul>
+    <p><strong>Total: {{ t.total }}</strong></p>
+    <p><a href="/admin/checkout.html?tid={{ t.tid }}" class="btn btn-primary">결제하기</a></p>
+  </section>
+{% endfor %}
+{% endblock %}

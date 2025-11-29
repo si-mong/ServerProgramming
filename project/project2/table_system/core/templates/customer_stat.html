@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% block title %}영수증 - {{ tid }}{% endblock %}
+{% block content %}
+<div class="receipt-page">
+  <div class="receipt-header">
+    <h1><span class="table-id">{{ tid }}</span> 영수증</h1>
+  </div>
+
+  <div class="receipt-body">
+    {% if orders %}
+    <table class="receipt-table">
+      <thead>
+        <tr>
+          <th class="menu-col">메뉴</th>
+          <th class="qty-col">수량</th>
+          <th class="price-col">단가</th>
+          <th class="subtotal-col">소계</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in orders %}
+        <tr>
+          <td class="menu-name">{{ o.menu }}</td>
+          <td class="qty">{{ o.num }}</td>
+          <td class="price">{{ o.price|floatformat:0 }}원</td>
+          <td class="subtotal">{{ o.subtotal|floatformat:0 }}원</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-orders">
+      <p>주문 내역이 없습니다.</p>
+    </div>
+    {% endif %}
+
+    <div class="receipt-footer">
+      <div class="total-section">
+        <p class="total-text">
+          <span class="total-label">총 합계</span>
+          <span class="total-amount">{{ total|floatformat:0 }}원</span>
+        </p>
+      </div>
+      
+      {% if finished %}
+      <div class="status-badge finished">
+        <span>✓ 주문 완료</span>
+      </div>
+      {% else %}
+      <div class="status-badge pending">
+        <span>주문 완료 전</span>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="receipt-actions">
+    <a href="/admin/table.html?action=stat" class="btn btn-secondary">테이블 목록으로</a>
+    <a href="/admin/status.html" class="btn btn-primary">전체 현황 보기</a>
+  </div>
+</div>
+
+<style>
+.receipt-page {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 2rem;
+}
+
+.receipt-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 3px solid #2563eb;
+}
+
+.receipt-header h1 {
+  color: #1f2937;
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.table-id {
+  color: #2563eb;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  background-color: #eff6ff;
+  border-radius: 4px;
+}
+
+.receipt-body {
+  margin-bottom: 2rem;
+}
+
+.receipt-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.receipt-table thead {
+  background-color: #f9fafb;
+}
+
+.receipt-table th {
+  padding: 0.875rem 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.receipt-table th.menu-col {
+  text-align: left;
+}
+
+.receipt-table th.qty-col,
+.receipt-table th.price-col,
+.receipt-table th.subtotal-col {
+  text-align: right;
+}
+
+.receipt-table td {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+  color: #1f2937;
+  font-size: 1rem;
+}
+
+.receipt-table tbody tr:last-child td {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.menu-col {
+  width: 40%;
+}
+
+.qty-col {
+  width: 15%;
+  text-align: right;
+}
+
+.price-col {
+  width: 22.5%;
+  text-align: right;
+}
+
+.subtotal-col {
+  width: 22.5%;
+  text-align: right;
+}
+
+.menu-name {
+  font-weight: 500;
+  color: #2563eb;
+}
+
+.qty {
+  text-align: right;
+  color: #6b7280;
+}
+
+.price {
+  text-align: right;
+  color: #6b7280;
+}
+
+.subtotal {
+  text-align: right;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.empty-orders {
+  text-align: center;
+  padding: 3rem;
+  color: #9ca3af;
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+}
+
+.receipt-footer {
+  margin-top: 2rem;
+}
+
+.total-section {
+  margin-bottom: 1.5rem;
+}
+
+.total-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.total-label {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.total-amount {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.status-badge.finished {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.receipt-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 3px solid #2563eb;
+}
+
+.receipt-actions .btn {
+  flex: 1;
+  max-width: 250px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  text-align: center;
+  justify-content: center;
+}
+</style>
+{% endblock %}
