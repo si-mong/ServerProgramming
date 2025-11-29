@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}주문 현황 - {{ tid }}{% endblock %}
+{% block content %}
+<h2>Order Status - {{ tid }}</h2>
+<ul>
+  {% for o in orders %}
+    <li>{{ o.menu }} × {{ o.num }} = {{ o.subtotal }}</li>
+  {% empty %}
+    <li>주문 없음</li>
+  {% endfor %}
+</ul>
+<p><strong>Total: {{ total }}</strong></p>
+{% if finished %}<p>status: finished</p>{% endif %}
+{% endblock %}
