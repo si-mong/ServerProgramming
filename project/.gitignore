@@ -1,1 +1,75 @@
+# --- macOS ---
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.Trashes
+.TemporaryItems/
+
+# --- VSCode ---
+.vscode/
+*.code-workspace
+
+# --- Python / Django ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.sqlite
+*.log
+
+# Environment
+.env
+.env.*
+venv/
+ENV/
+
+# Django specific
+staticfiles/
+media/
+*.pot
+
+# --- Node.js ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+.cache/
+.next/
+out/
+
+# --- IDE / Editor ---
+.idea/
+*.swp
+*.swo
+
+# --- OS / System Backup Files ---
+*.orig
+*.bak
+*.tmp
+
+# --- Git merge backups ---
+*.orig
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+
+# --- Misc ---
+*.zip
+*.tar
+*.tar.gz
