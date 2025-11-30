@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  restaurant:
+    build: .
+    container_name: restaurant-spring
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+

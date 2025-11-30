@@ -1,0 +1,25 @@
+# macOS / IDE
+.DS_Store
+.idea/
+*.iml
+.vscode/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Maven build
+target/
+*.class
+*.jar
+*.war
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+docker-data/
+data/

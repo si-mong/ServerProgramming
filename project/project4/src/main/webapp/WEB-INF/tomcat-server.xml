@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  고성능 Tomcat 설정 (1000~10000 동시접속자 대응)
+  - maxThreads: 최대 스레드 수 증가
+  - acceptCount: 대기 큐 크기 증가
+  - NIO Connector: 논블로킹 I/O 사용
+-->
+<Server port="8005" shutdown="SHUTDOWN">
+  <Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+  <GlobalNamingResources>
+    <Resource name="UserDatabase" auth="Container"
+              type="org.apache.catalina.UserDatabase"
+              description="User database that can be updated and saved"
+              factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+              pathname="conf/tomcat-users.xml" />
+  </GlobalNamingResources>
+
+  <Service name="Catalina">
+    <!--
+      고성능 NIO 커넥터 설정
+      - protocol="org.apache.coyote.http11.Http11NioProtocol": 논블로킹 I/O
+      - maxThreads="500": 최대 500개 동시 요청 처리
+      - minSpareThreads="50": 최소 50개 스레드 대기
+      - acceptCount="200": 최대 200개 요청 대기 큐
+      - connectionTimeout="20000": 20초 타임아웃
+      - enableLookups="false": DNS 조회 비활성화 (성능 향상)
+      - compression="on": HTTP 압축 활성화
+      - compressionMinSize="2048": 2KB 이상 파일 압축
+    -->
+    <Connector port="8000" 
+               protocol="org.apache.coyote.http11.Http11NioProtocol"
+               maxThreads="500"
+               minSpareThreads="50"
+               acceptCount="200"
+               connectionTimeout="20000"
+               redirectPort="8443"
+               enableLookups="false"
+               compression="on"
+               compressionMinSize="2048"
+               compressibleMimeType="text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json"
+               URIEncoding="UTF-8" />
+
+    <Engine name="Catalina" defaultHost="localhost">
+      <Realm className="org.apache.catalina.realm.LockOutRealm">
+        <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+               resourceName="UserDatabase"/>
+      </Realm>
+
+      <Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" 
+               directory="logs"
+               prefix="localhost_access_log" 
+               suffix=".txt"
+               pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+      </Host>
+    </Engine>
+  </Service>
+</Server>
+
