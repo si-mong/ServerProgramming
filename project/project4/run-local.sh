@@ -6,6 +6,10 @@ echo "============================================"
 echo "🏠 로컬 개발 서버 (Jetty)"
 echo "============================================"
 
+# 스크립트 위치 기준으로 프로젝트 루트 이동
+BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$BASE_DIR"
+
 # Maven 확인
 if ! command -v mvn &> /dev/null; then
     echo "❌ Maven이 설치되어 있지 않습니다."
@@ -14,12 +18,12 @@ if ! command -v mvn &> /dev/null; then
 fi
 
 echo ""
-echo "📊 서버 정보:"
+echo "서버 정보:"
 echo "  - 포트: 8000"
 echo "  - 관리자 현황: http://localhost:8000/admin/status.html"
 echo "  - 메뉴 관리: http://localhost:8000/admin/menu.html?action=stat"
 echo ""
-echo "🛑 서버 종료: Ctrl+C"
+echo "서버 종료: Ctrl+C"
 echo ""
 echo "🚀 Jetty 서버 시작 중..."
 echo "============================================"

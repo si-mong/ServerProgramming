@@ -47,6 +47,9 @@ public class CustomerController {
         }
         
         if ("add".equals(action)) {
+            // 수량이 없으면 1로 처리 (NPE 방지)
+            if (num == null) num = 1;
+
             // 메뉴가 존재하는지 확인
             Optional<Menu> menuOpt = menus.stream()
                     .filter(m -> m.getName().equals(menu))
@@ -80,6 +83,9 @@ public class CustomerController {
             storageService.saveOrders(orders);
             
         } else if ("del".equals(action)) {
+            // 수량이 없으면 1로 처리 (NPE 방지)
+            if (num == null) num = 1;
+
             // 메뉴가 존재하는지 확인
             boolean menuExists = menus.stream().anyMatch(m -> m.getName().equals(menu));
             if (!menuExists) {

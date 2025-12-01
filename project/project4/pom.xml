@@ -74,8 +74,8 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            
-            <!-- Jetty Maven Plugin (로컬 개발용 - 빠름) -->
+
+            <!-- Jetty Maven Plugin -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -84,15 +84,20 @@
                     <httpConnector>
                         <port>8000</port>
                     </httpConnector>
+
                     <webApp>
                         <contextPath>/</contextPath>
+
                     </webApp>
-                    <reload>automatic</reload>
-                    <scanIntervalSeconds>2</scanIntervalSeconds>
+
+                    <!-- 성능: 자동 리로드 & 스캔 끔 -->
+                    <reload>manual</reload>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
+
                 </configuration>
             </plugin>
-            
-            <!-- Tomcat Maven Plugin (로컬 테스트 대안) -->
+
+            <!-- Tomcat Maven Plugin (안 써도 되지만 놔둬도 무방) -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -105,7 +110,7 @@
             </plugin>
         </plugins>
     </build>
-</project>
 
+</project>
 
 

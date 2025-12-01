@@ -34,6 +34,9 @@ public class AdminController {
         List<Menu> menus = storageService.getMenus();
         
         if ("add".equals(action)) {
+            // 가격 정보가 없으면 0으로 처리 (NPE 방지)
+            if (price == null) price = 0;
+
             // 이미 존재하는 메뉴인지 확인
             boolean exists = menus.stream().anyMatch(m -> m.getName().equals(name));
             if (exists) {

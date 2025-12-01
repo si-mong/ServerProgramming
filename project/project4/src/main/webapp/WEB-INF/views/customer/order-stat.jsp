@@ -6,51 +6,115 @@
     <meta charset="UTF-8">
     <title>주문 현황 - ${tid}</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
         
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Noto Serif KR', serif;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #8B0000 100%);
-            background-attachment: fixed;
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 80px 0 0 0;
+            background-color: #8B0000;
+            /* 중국풍 격자 무늬 패턴 */
+            background-image: 
+                linear-gradient(30deg, #800000 12%, transparent 12.5%, transparent 87%, #800000 87.5%, #800000),
+                linear-gradient(150deg, #800000 12%, transparent 12.5%, transparent 87%, #800000 87.5%, #800000),
+                linear-gradient(30deg, #800000 12%, transparent 12.5%, transparent 87%, #800000 87.5%, #800000),
+                linear-gradient(150deg, #800000 12%, transparent 12.5%, transparent 87%, #800000 87.5%, #800000),
+                linear-gradient(60deg, #990000 25%, transparent 25.5%, transparent 75%, #990000 75%, #990000),
+                linear-gradient(60deg, #990000 25%, transparent 25.5%, transparent 75%, #990000 75%, #990000);
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
             min-height: 100vh;
         }
         
-        body::before {
-            content: '';
+        /* 상단 고정 메뉴바 */
+        .menu-bar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,215,0,0.05) 35px, rgba(255,215,0,0.05) 70px);
-            pointer-events: none;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 40px;
+            background: linear-gradient(90deg, #600000 0%, #8B0000 50%, #600000 100%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border-bottom: 3px solid #DAA520;
+        }
+
+        .brand-logo {
+            color: #FFD700;
+            font-size: 24px;
+            font-weight: 700;
+            margin-right: 60px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .menu-items {
+            display: flex;
+            gap: 10px;
         }
         
+        .menu-item {
+            padding: 10px 25px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 16px;
+            border: 1px solid transparent;
+        }
+        
+        .menu-item:hover {
+            background: rgba(218, 165, 32, 0.2);
+            color: #FFD700;
+            border-color: #DAA520;
+        }
+        
+        .menu-item.active {
+            background: #DAA520;
+            color: #600000;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+        }
+
         .container {
-            background: linear-gradient(to bottom, #FFF9E6 0%, #FFFEF7 100%);
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #FFF9E6; /* 연한 크림색 배경 */
             border-radius: 15px;
-            padding: 40px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
-            border: 3px solid #DAA520;
+            border: 4px double #DAA520; /* 금색 이중 테두리 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
-            z-index: 1;
         }
         
         .container::before {
-            content: '🥢';
+            content: '🐉';
             position: absolute;
-            top: -15px;
+            top: -35px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 30px;
-            background: #8B0000;
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 2px solid #DAA520;
+            font-size: 40px;
+            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #DAA520;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         
         h1 {
@@ -58,130 +122,90 @@
             text-align: center;
             font-size: 32px;
             font-weight: 700;
-            border-bottom: 3px double #DAA520;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(218,165,32,0.3);
-            letter-spacing: 2px;
-        }
-        
-        .table-info {
-            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
-            color: #FFD700;
-            padding: 20px 30px;
-            border-radius: 12px;
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 30px;
-            text-align: center;
-            border: 3px solid #DAA520;
-            box-shadow: 0 5px 15px rgba(139,0,0,0.3);
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 0 rgba(218, 165, 32, 0.3);
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            border: 2px solid #DAA520;
             background: white;
+            border: 2px solid #DAA520;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         
         th, td {
             padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #F0E68C;
+            border-bottom: 1px solid #eee;
         }
         
         th {
-            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+            background: linear-gradient(to bottom, #8B0000, #600000);
             color: #FFD700;
-            font-weight: 700;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 1px solid #600000;
+        }
+        
+        td {
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
         }
         
         tr:hover {
-            background-color: #FFF9E6;
+            background-color: #FFF5E6;
         }
         
-        .total-row {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            font-weight: bold;
-            font-size: 18px;
-            border-top: 3px double #8B0000;
+        .total-row td {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 700;
+            border-top: 2px solid #8B0000;
+            font-size: 16px;
         }
         
         .total-amount {
             color: #8B0000;
-            font-size: 22px;
-            font-weight: 900;
-            text-shadow: 1px 1px 2px rgba(218,165,32,0.3);
+            font-size: 18px;
         }
         
         .empty-order {
             text-align: center;
-            color: #999;
-            padding: 60px 20px;
-            font-size: 20px;
-            background: #FFF9E6;
-            border: 2px dashed #DAA520;
-            border-radius: 10px;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: bold;
-            margin-left: 15px;
-            border: 2px solid;
-        }
-        
-        .finished {
-            background: linear-gradient(135deg, #228B22 0%, #32CD32 100%);
-            color: white;
-            border-color: #006400;
-        }
-        
-        .pending {
-            background: linear-gradient(135deg, #FF8C00 0%, #FFA500 100%);
-            color: white;
-            border-color: #CC7000;
+            color: #888;
+            padding: 40px;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🏮 주문 현황 🏮</h1>
-        
-        <div class="table-info">
-            🪑 테이블: ${tid}
-            <c:choose>
-                <c:when test="${order.finished}">
-                    <span class="status-badge finished">✓ 주문확정 완료</span>
-                </c:when>
-                <c:otherwise>
-                    <span class="status-badge pending">⏳ 주문 진행중</span>
-                </c:otherwise>
-            </c:choose>
+    <!-- 상단 고정 메뉴바 -->
+    <div class="menu-bar">
+        <a href="/admin/status.html" class="brand-logo">장군반점</a>
+        <div class="menu-items">
+            <a href="/admin/status.html" class="menu-item">전체 현황</a>
+            <a href="/admin/menu.html?action=stat" class="menu-item">메뉴 관리</a>
+            <a href="/admin/table.html?action=stat" class="menu-item">테이블 관리</a>
         </div>
+    </div>
+    
+    <div class="container">
+        <h1>🏮 테이블 ${tid} 주문현황 🏮</h1>
         
         <c:choose>
             <c:when test="${empty order.items}">
                 <div class="empty-order">
-                    🛒 주문 내역이 없습니다.<br>
-                    <small style="color: #999; margin-top: 15px; display: block;">맛있는 요리를 주문해주세요!</small>
+                    주문 내역이 없습니다.
                 </div>
             </c:when>
             <c:otherwise>
                 <table>
                     <thead>
                         <tr>
-                            <th>🍜 메뉴</th>
-                            <th>💰 단가</th>
-                            <th>📦 수량</th>
-                            <th>💵 금액</th>
+                            <th>메뉴</th>
+                            <th>단가</th>
+                            <th>수량</th>
+                            <th>금액</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -194,7 +218,7 @@
                             </tr>
                         </c:forEach>
                         <tr class="total-row">
-                            <td colspan="3">💴 총 합계</td>
+                            <td colspan="3">총 합계</td>
                             <td class="total-amount">${order.total}원</td>
                         </tr>
                     </tbody>

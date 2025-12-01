@@ -6,54 +6,115 @@
     <meta charset="UTF-8">
     <title>관리자 현황</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
         
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Noto Serif KR', serif;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            background: linear-gradient(135deg, #8B0000 0%, #DC143C 50%, #8B0000 100%);
-            background-attachment: fixed;
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 80px 0 0 0;
+            background-color: #8B0000;
+            /* 중국풍 격자 무늬 패턴 */
+            background-image: 
+                linear-gradient(30deg, #800000 12%, transparent 12.5%, transparent 87%, #800000 87.5%, #800000),
+                linear-gradient(150deg, #800000 12%, transparent 12.5%, transparent 87%, #800000 87.5%, #800000),
+                linear-gradient(30deg, #800000 12%, transparent 12.5%, transparent 87%, #800000 87.5%, #800000),
+                linear-gradient(150deg, #800000 12%, transparent 12.5%, transparent 87%, #800000 87.5%, #800000),
+                linear-gradient(60deg, #990000 25%, transparent 25.5%, transparent 75%, #990000 75%, #990000),
+                linear-gradient(60deg, #990000 25%, transparent 25.5%, transparent 75%, #990000 75%, #990000);
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
             min-height: 100vh;
-            position: relative;
         }
         
-        body::before {
-            content: '';
+        /* 상단 고정 메뉴바 */
+        .menu-bar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,215,0,0.05) 35px, rgba(255,215,0,0.05) 70px);
-            pointer-events: none;
-            z-index: 0;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 40px;
+            background: linear-gradient(90deg, #600000 0%, #8B0000 50%, #600000 100%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border-bottom: 3px solid #DAA520;
+        }
+
+        .brand-logo {
+            color: #FFD700;
+            font-size: 24px;
+            font-weight: 700;
+            margin-right: 60px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .menu-items {
+            display: flex;
+            gap: 10px;
         }
         
+        .menu-item {
+            padding: 10px 25px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            font-size: 16px;
+            border: 1px solid transparent;
+        }
+        
+        .menu-item:hover {
+            background: rgba(218, 165, 32, 0.2);
+            color: #FFD700;
+            border-color: #DAA520;
+        }
+        
+        .menu-item.active {
+            background: #DAA520;
+            color: #600000;
+            font-weight: 700;
+            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
+        }
+
         .container {
-            background: linear-gradient(to bottom, #FFF9E6 0%, #FFFEF7 100%);
-            border-radius: 15px;
+            max-width: 1200px;
+            margin: 40px auto;
             padding: 30px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.4), 
-                        inset 0 0 30px rgba(255,215,0,0.1);
-            border: 3px solid #DAA520;
+            background-color: #FFF9E6; /* 연한 크림색 배경 */
+            border-radius: 15px;
+            border: 4px double #DAA520; /* 금색 이중 테두리 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
-            z-index: 1;
         }
         
         .container::before {
             content: '🐉';
             position: absolute;
-            top: -15px;
+            top: -35px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 30px;
-            background: #8B0000;
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 2px solid #DAA520;
+            font-size: 40px;
+            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #DAA520;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
         
         h1 {
@@ -61,132 +122,127 @@
             text-align: center;
             font-size: 32px;
             font-weight: 700;
-            border-bottom: 3px double #DAA520;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(218,165,32,0.3);
-            letter-spacing: 2px;
-        }
-        
-        .table-section {
             margin-bottom: 40px;
-            padding: 25px;
-            background: linear-gradient(135deg, #FFF 0%, #FFF9E6 100%);
-            border-radius: 12px;
-            border: 2px solid #DAA520;
-            box-shadow: 0 5px 15px rgba(139,0,0,0.2);
-            position: relative;
+            text-shadow: 1px 1px 0 rgba(218, 165, 32, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
-        
-        .table-section::before {
-            content: '🏮';
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            font-size: 24px;
+
+        /* 테이블 섹션 스타일 */
+        .table-section {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 2px solid #DAA520;
+            position: relative;
         }
         
         .table-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 2px dashed #DAA520;
         }
         
         .table-id {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 22px;
+            font-weight: 700;
             color: #8B0000;
-            text-shadow: 1px 1px 2px rgba(218,165,32,0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .checkout-btn {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+            padding: 8px 20px;
+            background: linear-gradient(to bottom, #b22222, #800000);
             color: #FFD700;
-            border: 2px solid #DAA520;
-            border-radius: 8px;
+            border: 1px solid #DAA520;
+            border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(139,0,0,0.3);
-            font-size: 15px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.2s;
         }
         
         .checkout-btn:hover {
-            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(139,0,0,0.4);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
         
+        /* 데이터 테이블 스타일 */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-            background: white;
-            border: 1px solid #DAA520;
-        }
-        
-        th, td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid #F0E68C;
+            font-size: 15px;
         }
         
         th {
-            background: linear-gradient(135deg, #8B0000 0%, #DC143C 100%);
+            background: linear-gradient(to bottom, #8B0000, #600000);
             color: #FFD700;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid #DAA520;
+            font-weight: 500;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #600000;
+        }
+        
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #E0E0E0;
+            color: #333;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
         }
         
         tr:hover {
-            background-color: #FFF9E6;
+            background-color: #FFF5E6;
         }
         
-        .total-row {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            font-weight: bold;
-            font-size: 17px;
-            border-top: 3px double #8B0000;
+        .total-row td {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 700;
+            border-top: 2px solid #8B0000;
+            font-size: 16px;
         }
         
         .total-amount {
             color: #8B0000;
-            font-size: 20px;
-            font-weight: 900;
-            text-shadow: 1px 1px 2px rgba(218,165,32,0.3);
+            font-size: 18px;
         }
         
         .empty-order {
-            color: #999;
-            font-style: italic;
-            padding: 30px;
+            color: #888;
             text-align: center;
-            background: #FFF9E6;
-            border-radius: 8px;
-            border: 2px dashed #DAA520;
+            padding: 40px;
+            font-style: italic;
         }
         
-        .finished-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            background: linear-gradient(135deg, #228B22 0%, #32CD32 100%);
-            color: white;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-left: 10px;
-            border: 1px solid #006400;
-            font-weight: bold;
+        .checkout-container {
+            margin-top: 20px;
+            text-align: left;
         }
     </style>
 </head>
 <body>
+    <!-- 상단 고정 메뉴바 -->
+    <div class="menu-bar">
+        <a href="/admin/status.html" class="brand-logo">장군반점</a>
+        <div class="menu-items">
+            <a href="/admin/status.html" class="menu-item active">전체 현황</a>
+            <a href="/admin/menu.html?action=stat" class="menu-item">메뉴 관리</a>
+            <a href="/admin/table.html?action=stat" class="menu-item">테이블 관리</a>
+        </div>
+    </div>
+    
     <div class="container">
         <h1>🏮 전체 주문 현황 🏮</h1>
         
@@ -198,17 +254,7 @@
                 <c:forEach items="${tables}" var="table">
                     <div class="table-section">
                         <div class="table-header">
-                            <div>
-                                <span class="table-id">테이블: ${table.tid}</span>
-                                <c:if test="${orders[table.tid].finished}">
-                                    <span class="finished-badge">주문확정</span>
-                                </c:if>
-                            </div>
-                            <c:if test="${not empty orders[table.tid] and not empty orders[table.tid].items}">
-                                <a href="/admin/checkout.html?tid=${table.tid}" class="checkout-btn">
-                                    💳 결제하기
-                                </a>
-                            </c:if>
+                            <span class="table-id">테이블: ${table.tid}</span>
                         </div>
                         
                         <c:choose>
@@ -240,6 +286,13 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <c:if test="${not empty orders[table.tid] and not empty orders[table.tid].items}">
+                                    <div class="checkout-container">
+                                        <a href="/admin/checkout.html?tid=${table.tid}" class="checkout-btn">
+                                            결제하기
+                                        </a>
+                                    </div>
+                                </c:if>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -249,4 +302,3 @@
     </div>
 </body>
 </html>
-
