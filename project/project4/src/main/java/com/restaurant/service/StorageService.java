@@ -14,6 +14,9 @@ import java.lang.reflect.Type;
 import java.nio.file.*;
 import java.util.*;
 
+// 추가
+import java.nio.charset.StandardCharsets;
+
 @Service
 public class StorageService {
     private static final String DATA_DIR = "data";
@@ -39,15 +42,19 @@ public class StorageService {
             if (!Files.exists(dataPath)) {
                 Files.createDirectories(dataPath);
             }
-
+            // UTF-8로 명시해서 쓰기
             if (!Files.exists(Paths.get(MENU_FILE))) {
-                Files.write(Paths.get(MENU_FILE), "[]".getBytes());
+                
+                Files.write(Paths.get(MENU_FILE),
+                        "[]".getBytes(StandardCharsets.UTF_8));
             }
             if (!Files.exists(Paths.get(TABLE_FILE))) {
-                Files.write(Paths.get(TABLE_FILE), "[]".getBytes());
+                Files.write(Paths.get(TABLE_FILE),
+                        "[]".getBytes(StandardCharsets.UTF_8));
             }
             if (!Files.exists(Paths.get(ORDER_FILE))) {
-                Files.write(Paths.get(ORDER_FILE), "{}".getBytes());
+                Files.write(Paths.get(ORDER_FILE),
+                        "{}".getBytes(StandardCharsets.UTF_8));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,20 +63,30 @@ public class StorageService {
 
     private void loadData() {
         try {
-            String menuJson = new String(Files.readAllBytes(Paths.get(MENU_FILE)));
-            Type menuListType = new TypeToken<List<Menu>>(){}.getType();
-            menusCache = gson.fromJson(menuJson, menuListType);
-            if (menusCache == null) menusCache = new ArrayList<>();
+            // 항상 UTF-8로 읽기
+            String menuJson = new String(
+                Files.readAllBytes(Paths.get(MENU_FILE)),
+                StandardCharsets.UTF_8
+        );
+        Type menuListType = new TypeToken<List<Menu>>(){}.getType();
+        menusCache = gson.fromJson(menuJson, menuListType);
+        if (menusCache == null) menusCache = new ArrayList<>();
 
-            String tableJson = new String(Files.readAllBytes(Paths.get(TABLE_FILE)));
-            Type tableListType = new TypeToken<List<Table>>(){}.getType();
-            tablesCache = gson.fromJson(tableJson, tableListType);
-            if (tablesCache == null) tablesCache = new ArrayList<>();
+        String tableJson = new String(
+                Files.readAllBytes(Paths.get(TABLE_FILE)),
+                StandardCharsets.UTF_8
+        );
+        Type tableListType = new TypeToken<List<Table>>(){}.getType();
+        tablesCache = gson.fromJson(tableJson, tableListType);
+        if (tablesCache == null) tablesCache = new ArrayList<>();
 
-            String orderJson = new String(Files.readAllBytes(Paths.get(ORDER_FILE)));
-            Type orderMapType = new TypeToken<Map<String, Order>>(){}.getType();
-            ordersCache = gson.fromJson(orderJson, orderMapType);
-            if (ordersCache == null) ordersCache = new HashMap<>();
+        String orderJson = new String(
+                Files.readAllBytes(Paths.get(ORDER_FILE)),
+                StandardCharsets.UTF_8
+        );
+        Type orderMapType = new TypeToken<Map<String, Order>>(){}.getType();
+        ordersCache = gson.fromJson(orderJson, orderMapType);
+        if (ordersCache == null) ordersCache = new HashMap<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,11 +121,12 @@ public class StorageService {
         ordersCache = new HashMap<>(orders);
         saveToFile(ORDER_FILE, orders);
     }
-
     private void saveToFile(String filename, Object data) {
         try {
             String json = gson.toJson(data);
-            Files.write(Paths.get(filename), json.getBytes());
+            // UTF-8로 저장
+            Files.write(Paths.get(filename),
+                    json.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }

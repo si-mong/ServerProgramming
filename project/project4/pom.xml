@@ -87,13 +87,23 @@
 
                     <webApp>
                         <contextPath>/</contextPath>
-
                     </webApp>
 
                     <!-- 성능: 자동 리로드 & 스캔 끔 -->
                     <reload>manual</reload>
                     <scanIntervalSeconds>0</scanIntervalSeconds>
-
+                    
+                    <!-- UTF-8 인코딩 설정 -->
+                    <systemProperties>
+                        <systemProperty>
+                            <name>org.eclipse.jetty.util.UrlEncoded.charset</name>
+                            <value>UTF-8</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>file.encoding</name>
+                            <value>UTF-8</value>
+                        </systemProperty>
+                    </systemProperties>
                 </configuration>
             </plugin>
 
@@ -106,11 +116,10 @@
                     <port>8000</port>
                     <path>/</path>
                     <contextReloadable>true</contextReloadable>
+                    <uriEncoding>UTF-8</uriEncoding>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
 </project>
-
-

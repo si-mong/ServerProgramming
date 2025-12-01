@@ -7,6 +7,8 @@ RUN rm -rf /usr/local/tomcat/webapps/*
 # Set environment variables
 ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 # Install Maven
 RUN apt-get update && \
@@ -40,7 +42,7 @@ COPY src/main/webapp/WEB-INF/tomcat-server.xml /usr/local/tomcat/conf/server.xml
 # -XX:+UseG1GC: G1 가비지 컬렉터 사용 (낮은 지연시간)
 # -XX:MaxGCPauseMillis=200: GC 일시정지 목표 200ms
 # -XX:+UseStringDeduplication: 문자열 중복 제거 (메모리 절약)
-ENV JAVA_OPTS="-Xms512m -Xmx1024m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+UseStringDeduplication -Djava.security.egd=file:/dev/./urandom"
+ENV JAVA_OPTS="-Dfile.encoding=UTF-8 -Xms512m -Xmx1024m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+UseStringDeduplication -Djava.security.egd=file:/dev/./urandom"
 
 # Start Tomcat
 CMD ["catalina.sh", "run"]
