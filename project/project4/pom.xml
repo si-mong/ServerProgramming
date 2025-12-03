@@ -107,7 +107,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Tomcat Maven Plugin (안 써도 되지만 놔둬도 무방) -->
+            <!-- Tomcat Maven Plugin -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>

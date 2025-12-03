@@ -176,6 +176,29 @@
             padding: 40px;
             font-style: italic;
         }
+        
+        .order-status {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .status-finished {
+            background: #228B22;
+            color: white;
+        }
+        
+        .status-pending {
+            background: #FF8C00;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -191,6 +214,17 @@
     
     <div class="container">
         <h1>🏮 테이블 ${tid} 주문현황 🏮</h1>
+        
+        <div class="order-status">
+            <c:choose>
+                <c:when test="${order.finished}">
+                    <span class="status-badge status-finished">주문 확정 완료</span>
+                </c:when>
+                <c:otherwise>
+                    <span class="status-badge status-pending">주문 진행중</span>
+                </c:otherwise>
+            </c:choose>
+        </div>
         
         <c:choose>
             <c:when test="${empty order.items}">
