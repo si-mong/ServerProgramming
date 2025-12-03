@@ -22,7 +22,7 @@ Linux 기반 환경에서 C 언어를 중심으로 서버 프로그램을 작성
 10주차: 스레드  
 11주차: 소켓 프로그래밍 1  
 12주차: 소켓 프로그래밍 2  
-
+13주차부터 개인 프로젝트 진행   
 ## 4. 개인 과제  
 - Micro Project: Web Server (C 기반)  
 - Micro Project: Django Server  
