@@ -3,16 +3,16 @@
 
 ### 📖 Overview
 ---
-### (1) Learning Make
-**Make** is a build automation tool used to manage and maintain groups of programs.
-* **Purpose:** When a file is modified, Make detects the change and rebuilds only the files related to that modification.
-* **Makefile Components:** A Makefile consists of three main components:
+(1) **Learning Make**
+- Make is a build automation tool used to manage and maintain groups of programs.
+- **Purpose:** When a file is modified, Make detects the change and rebuilds only the files related to that modification.
+- **Makefile Components:** A Makefile consists of three main components:
     * **Target:** The file to be generated (e.g., executable or object file).
     * **Dependency:** The files required to create the target.
     * **Command:** The shell command to execute (must be preceded by a **Tab**).
 
 
-### (2) Writing a Makefile
+(2) **Writing a Makefile**
 * Programs are divided into multiple source files (e.g., `main.c`, `gugu.c`).
 * Multiple source files are compiled and linked using a Makefile.
 * **Basic Makefile syntax:**
@@ -21,7 +21,7 @@
     [tab] command
     ```
 
-### (3) Writing a buildable Makefile
+(3) **Writing a buildable Makefile**
 * Practice writing Makefiles that can successfully build projects with various directory structures.
 <br/>
 
