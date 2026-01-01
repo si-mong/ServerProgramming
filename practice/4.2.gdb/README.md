@@ -2,7 +2,7 @@
 
 ### 📖 Overview  
 ---
-GDB? 
+GDB?   
 GDB (GNU Debugger) is a debugging tool for C/C++ programs that allows developers to
 control program execution and inspect variables and memory states in order to analyze runtime errors.
 
