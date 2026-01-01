@@ -36,7 +36,8 @@ Each example covers the following contents.
 	•	Analyzing errors caused by out-of-bounds array access
 
 
-###📖 개요
+### 📖 개요
+---
 GDB란?
 GDB(GNU Debugger) 는 C/C++ 프로그램의 실행 흐름을 제어하고, 변수·메모리 상태를 확인하여
 런타임 오류를 분석할 수 있는 GNU 디버깅 도구이다.
