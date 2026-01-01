@@ -6,6 +6,7 @@ GDB?
 GDB (GNU Debugger) is a debugging tool for C/C++ programs that allows developers to
 control program execution and inspect variables and memory states in order to analyze runtime errors.
 
+<br/>
 
 ### 📘 Course Content  
 ---
@@ -19,6 +20,7 @@ The following topics were covered in Week 4.
 - Inspecting variable states and memory values
 - Analyzing the causes of segmentation faults
 
+<br/>
 
 ### 📘 Example Descriptions  
 ---
@@ -35,6 +37,7 @@ Each example covers the following contents.
 - a5: array_overflow
 	•	Analyzing errors caused by out-of-bounds array access
 
+<br/>
 
 ### 📖 개요
 ---
@@ -42,6 +45,7 @@ GDB란?
 GDB(GNU Debugger) 는 C/C++ 프로그램의 실행 흐름을 제어하고, 변수·메모리 상태를 확인하여
 런타임 오류를 분석할 수 있는 GNU 디버깅 도구이다.
 
+<br/>
 
 ### 📘 수업 내용  
 ---
@@ -55,7 +59,7 @@ GDB(GNU Debugger) 는 C/C++ 프로그램의 실행 흐름을 제어하고, 변�
 - 변수 상태 및 메모리 값 확인
 - Segmentation Fault 발생 원인 분석
 
-
+<br/>
 
 ### 📘 예제별 내용  
 ---
