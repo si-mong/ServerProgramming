@@ -1,4 +1,4 @@
-# 💻 Practice: GNU DeBugger (GDB)
+# 💻 GNU DeBugger (GDB)
 
 ### 📖 Overview  
 ---
