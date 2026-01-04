@@ -1,7 +1,7 @@
 CFLAGS = -Wall -O -g -Iinclude
 
 bin = mycp
-t1 = ex3
+t1 = exercise1
 obj = $(t1).o
 
 all: $(bin)
