@@ -60,10 +60,6 @@ open http://localhost:8000/admin/status.html
 # 1. 프로젝트를 학교 서버에 업로드
 # 2. 컨테이너에서 실행
 ./run.sh
-
-# 교수님이 테스트
-curl http://localhost:8000/admin/status.html
-ab -n 10000 -c 1000 http://localhost:8000/admin/menu.html?action=stat
 ```
 
 ---
@@ -222,7 +218,7 @@ project4/
 
 ## 에러 처리
 
-모든 에러 메시지는 과제 명세에 따라 정확히 구현:
+모든 에러 메시지는 과제 명세에 따라 구현:
 
 - `menu add error` - 중복 메뉴 추가
 - `menu del error` - 없는 메뉴 삭제
@@ -257,7 +253,3 @@ project4/
 - ✅ 고성능 최적화
 
 ---
-
-## 개발자
-
-Server Programming Project 4
